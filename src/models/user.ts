@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-interface IUser {
+export interface IUser {
+    id: string;
     email: string;
     username: string;
     password: string;
@@ -38,5 +39,5 @@ const userSchema = new mongoose.Schema({
     {timestamps: true}
 );
 
-module.exports = mongoose.model('User', userSchema);
+export const User = mongoose.model<IUser>('User', userSchema);
 
