@@ -1,6 +1,6 @@
 import {catchAsync} from "../utils/catchAsync";
 import {NextFunction, Response} from "express";
-import {httpDataResponse, httpResponse} from "../utils/httpResponse";
+import {httpDataResponse, httpResponse} from "../utils/abstractions/httpResponse";
 
 export class AuthController {
 

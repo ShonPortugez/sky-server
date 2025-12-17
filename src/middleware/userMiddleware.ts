@@ -1,8 +1,8 @@
-import {User} from "../models/user";
+import {User} from "../models/user.types";
 import { Request, Response, NextFunction } from 'express';
 import mongoose from "mongoose";
-import {isValidObjectId} from "../utils/validDbEntityId";
-import {httpResponse} from "../utils/httpResponse";
+import {isValidObjectId} from "../utils/helpers/validDbEntityId";
+import {httpResponse} from "../utils/abstractions/httpResponse";
 import {HttpStatus} from "../enums/httpStatus";
 
 export const UserMiddleware = async (req: Request, res: Response, next: NextFunction) => {
