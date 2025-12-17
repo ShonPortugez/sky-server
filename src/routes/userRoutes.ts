@@ -8,6 +8,8 @@ const userController = new UserController();
 
 router
     .route('/:id')
-    .get(UserMiddleware, userController.getUserById);
+    .get(UserMiddleware, userController.getUserById)
+    .post(userController.createUser)
+    .put(userController.updateUser);
 
 export default router;
