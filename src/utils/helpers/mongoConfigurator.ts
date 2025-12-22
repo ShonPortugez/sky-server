@@ -3,7 +3,7 @@ import {MongoConnection} from "../../database/mongoConnection";
 import {logger} from "../logger";
 import * as process from "node:process";
 
-export function configureMongoDb(): void {
+export const configureMongoDb = () => {
     MongoConnection.getInstance()
         .connect(process.env.DATABASE_URI ?? '')
         .catch(err => {

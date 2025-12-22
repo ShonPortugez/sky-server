@@ -2,7 +2,6 @@ import {BaseDocument} from "../utils/abstractions/mongoBaseDocument";
 import {QuestionResponse} from "./response.types";
 import {QuestionType} from "../enums";
 
-// Base & Abstractions
 export interface BaseQuestion extends BaseDocument{
     label: string;
     description: string;
@@ -17,7 +16,6 @@ interface MinMaxQuestion extends BaseQuestion {
     maxValue: number;
 }
 
-// Question Types
 export interface SliderQuestion extends MinMaxQuestion {}
 export interface RateQuestion extends MinMaxQuestion {}
 
