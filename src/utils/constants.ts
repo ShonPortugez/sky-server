@@ -3,6 +3,9 @@ export const USERS_COLLECTION = 'users';
 export const SURVEYS_COLLECTION = 'surveys';
 export const DEFAULT_DB_TIMEOUT= 5000;
 
+export const REQUEST_PROPERTY='auth'
+export const DEFAULT_JWT_ALGORITHM='HS256'
+
 export const QUESTION_DISCRIMINATOR_KEY = 'type'
 export const QUESTION = 'question';
 export const QUESTION_SLIDER = 'slider';
