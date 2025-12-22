@@ -5,15 +5,14 @@ import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
 import {BaseQuestion} from "./question.types";
 import {QUESTION, QUESTION_DISCRIMINATOR_KEY, SURVEYS_COLLECTION} from "../utils/constants";
 
-// Base Question Schema
 export const BaseQuestionSchema = new Schema<BaseQuestion>({
     label: { type: String, required: true },
     description: { type: String, default: "" },
     type: {
-        type: String,
+        $type: String,
         enum: Object.values(QuestionType),
         required: true
-    } as any,
+    },
     isRequired: { type: Boolean, default: false },
     index: { type: Number, required: true },
     responses: []
@@ -25,9 +24,7 @@ export const BaseQuestionSchema = new Schema<BaseQuestion>({
 
 export const Question = model<BaseQuestion>(QUESTION, BaseQuestionSchema);
 
-// Discriminators
 
-// Shared Range Logic for Slider/Rate
 const rangeFields = {
     minValue: { type: Number, required: true },
     maxValue: { type: Number, required: true }

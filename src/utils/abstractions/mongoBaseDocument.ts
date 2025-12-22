@@ -7,6 +7,4 @@ export interface BaseDocument extends Document {
 
 export const baseSchemaOptions = {
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
 }

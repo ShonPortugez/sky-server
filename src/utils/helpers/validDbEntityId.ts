@@ -1,3 +1,5 @@
+import {VALID_UUID_REGEX} from "../constants";
+
 export function isValidObjectId(id: string): boolean {
-    return /^[0-9a-fA-F]{24}$/.test(id);
+    return VALID_UUID_REGEX.test(id);
 }
