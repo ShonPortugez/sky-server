@@ -1,9 +1,9 @@
 import {User} from "../models";
-import {UserDataDto} from "../dto/user";
+import {UserData} from "../utils/types/user";
 
 export class UserService {
 
-    public async createUser(data: UserDataDto): Promise<User> {
+    public async createUser(data: UserData): Promise<User> {
         throw new Error("Method not implemented.");
     }
 
@@ -15,7 +15,7 @@ export class UserService {
         throw new Error("Method not implemented.");
     }
 
-    public async updateUser(existingUser: User, data: UserDataDto) {
+    public async updateUser(existingUser: User, data: UserData) {
         throw new Error("Method not implemented.");
     }
 

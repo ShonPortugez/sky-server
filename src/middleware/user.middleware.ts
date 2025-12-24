@@ -1,12 +1,14 @@
 import { injectable} from "tsyringe";
 import {ExpressMiddlewareInterface, NotFoundError} from "routing-controllers";
 import {UserService} from "../services/userService";
+import {NextFunction, Response} from "express";
+import {AuthRequest} from "../utils/types/auth.types";
 
 @injectable()
 export class UserMiddleware implements ExpressMiddlewareInterface {
     constructor(private readonly userService: UserService) {}
 
-    async use(request: any, response: any, next: (err?: any) => any) {
+    async use(request: AuthRequest, response: Response, next: NextFunction) {
         const userId = request.auth?.id;
         const user = await this.userService.getUserById(userId);
 
