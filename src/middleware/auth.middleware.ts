@@ -1,10 +1,13 @@
 import {expressjwt} from "express-jwt";
-import {REQUEST_PROPERTY} from "../utils/constants";
+import {Algorithm} from 'jsonwebtoken'
+import {DEFAULT_JWT_ALGORITHM, REQUEST_PROPERTY} from "../utils/constants";
 import * as process from "node:process";
 import 'dotenv/config';
 
-export const authMiddleware = expressjwt({
+const jwtAlgorithm = process.env.JWT_ALGORITHM? process.env.JWT_ALGORITHM : DEFAULT_JWT_ALGORITHM;
+
+export const AuthMiddleware = expressjwt({
     secret: process.env.JWT_SECRET,
-    algorithms: ['HS256'],
+    algorithms: [jwtAlgorithm as Algorithm],
     requestProperty: REQUEST_PROPERTY,
 });

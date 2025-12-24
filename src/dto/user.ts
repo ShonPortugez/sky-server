@@ -18,5 +18,6 @@ export interface UserAuthRequestDto {
 
 export class UserAuthResponseDto {
     id: string;
+    email: string;
     accessToken: string;
 }
