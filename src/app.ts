@@ -13,7 +13,7 @@ import {AuthController} from "./controllers/auth.controller";
 import {AuthMiddleware} from "./middleware/auth.middleware";
 
 useContainer({
-    get: (someClass) => container.resolve(someClass)
+    get: (classConstructor) => container.resolve(classConstructor)
 });
 
 const app = createExpressServer({

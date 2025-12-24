@@ -20,4 +20,5 @@ export class UserAuthResponse {
     id: string;
     email: string;
     accessToken: string;
+    refreshToken: string;
 }

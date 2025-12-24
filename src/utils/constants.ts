@@ -5,6 +5,9 @@ export const DEFAULT_DB_TIMEOUT= 5000;
 
 export const REQUEST_PROPERTY='auth'
 export const JWT_ALGORITHM='HS256'
+export const JWT_DEFAULT_EXPIRE_IN='15m'
+export const REFRESH_TOKEN_EXPIRE_IN='15d'
+export const PASSWORD_SALT_ROUNDS=10
 
 export const QUESTION_DISCRIMINATOR_KEY = 'type'
 export const QUESTION = 'question';

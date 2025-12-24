@@ -1,25 +1,31 @@
-import {User} from "../models";
+import {User, UserModel} from "../models";
 import {UserData} from "../utils/types/user";
+import bcrypt from "bcrypt";
+import {PASSWORD_SALT_ROUNDS} from "../utils/constants";
 
 export class UserService {
 
     public async createUser(data: UserData): Promise<User> {
-        throw new Error("Method not implemented.");
+        return await UserModel.create({...data,});
     }
 
     public async getUserById(id: string): Promise<User> {
-        throw new Error("Method not implemented.");
+        return await UserModel.findById(id).exec();
     }
 
     public async getUserByEmail(email: string): Promise<User> {
-        throw new Error("Method not implemented.");
+        return await UserModel.findOne({email: email}).exec();
     }
 
     public async updateUser(existingUser: User, data: UserData) {
-        throw new Error("Method not implemented.");
+        return await UserModel.findByIdAndUpdate({
+            email: data.email,
+            username: existingUser.username,
+            password: await bcrypt.hash(data.password, PASSWORD_SALT_ROUNDS),
+        }).exec();
     }
 
     public async deleteUser(user: User) {
-        throw new Error("Method not implemented.");
+        await UserModel.findByIdAndDelete(user.id).exec();
     }
 }
