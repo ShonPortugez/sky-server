@@ -1,16 +1,16 @@
 import { Schema, model } from 'mongoose';
 import { QuestionType } from '../enums';
 import * as Response from './response.model'
-import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
-import {BaseQuestion} from "./question.types";
-import {QUESTION, QUESTION_DISCRIMINATOR_KEY, SURVEYS_COLLECTION} from "../utils/constants";
+import { baseSchemaOptions } from "../utils/abstractions/mongoBaseDocument";
+import { BaseQuestion } from "./question.types";
+import { QUESTION, QUESTION_DISCRIMINATOR_KEY, DB_SURVEYS_COLLECTION } from "../utils/constants";
 
 export const BaseQuestionSchema = new Schema<BaseQuestion>({
     label: { type: String, required: true },
     description: { type: String, default: "" },
-    type: {
-        $type: String,
-        enum: Object.values(QuestionType),
+    questionType: {
+        type: Number,
+        enum: Object.values(QuestionType).filter(v => typeof v === 'number'),
         required: true
     },
     isRequired: { type: Boolean, default: false },
@@ -19,7 +19,7 @@ export const BaseQuestionSchema = new Schema<BaseQuestion>({
 }, {
     ...baseSchemaOptions,
     discriminatorKey: QUESTION_DISCRIMINATOR_KEY,
-    collection: SURVEYS_COLLECTION
+    collection: DB_SURVEYS_COLLECTION,
 });
 
 export const Question = model<BaseQuestion>(QUESTION, BaseQuestionSchema);

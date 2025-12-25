@@ -1,10 +1,9 @@
 import {inject, injectable} from "tsyringe";
-import {Body, Get, JsonController, NotFoundError, Patch, UseBefore} from "routing-controllers";
-import {AuthMiddleware} from "../middleware/auth.middleware";
-import {CurrentUser} from "../decorators/currentUser";
-import {User} from "../models";
+import {BadRequestError, Body, CookieParam, Get, HttpCode, JsonController, NotFoundError, Patch, Req, Res, UseBefore} from "routing-controllers";
+import type { Response } from 'express';
 import {UserAuthRequest} from "../utils/types/user";
 import {AuthService} from "../services/authService";
+import {setJwtCookies} from "../utils/helpers/cookieOptions";
 
 @injectable()
 @JsonController('/auth')
@@ -20,17 +19,13 @@ export class AuthController {
         return userTokens;
     }
 
-    @UseBefore(AuthMiddleware)
-    @Get('/logout')
-    async logout(@CurrentUser() user: User) {
-        await this.authService.logout(user)
-    }
-
     @Patch('/refresh')
-    @UseBefore(AuthMiddleware)
-    async refresh(
-        @CurrentUser() user: User,
-    ) {
-        return await this.authService.renewToken(user);
+    async refresh(@Req() req: Request, @Res() res: Response, @CookieParam('refresh') refreshToken: string) {
+        if(!refreshToken)
+            throw new BadRequestError('Failed to locate refresh cookie');
+
+        const newAccessToken= await this.authService.renewToken(refreshToken);
+        setJwtCookies(res, newAccessToken, refreshToken);
+        return res.status(200);
     }
 }

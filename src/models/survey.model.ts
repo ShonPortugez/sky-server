@@ -1,5 +1,5 @@
 import { Schema, model, Types } from 'mongoose';
-import {SURVEYS_COLLECTION} from "../utils/constants";
+import {DB_SURVEYS_COLLECTION} from "../utils/constants";
 import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
 import {BaseQuestionSchema} from "./question.model";
 import {Survey} from "./survey.types";
@@ -29,7 +29,7 @@ const SurveySchema = new Schema<Survey>({
 
 }, {
     ...baseSchemaOptions,
-    collection: SURVEYS_COLLECTION
+    collection: DB_SURVEYS_COLLECTION
 });
 
 export const SurveyModel = model<Survey>('Survey', SurveySchema);

@@ -2,7 +2,9 @@ import {User, UserModel} from "../models";
 import {UserData} from "../utils/types/user";
 import bcrypt from "bcrypt";
 import {PASSWORD_SALT_ROUNDS} from "../utils/constants";
+import {injectable} from "tsyringe";
 
+@injectable()
 export class UserService {
 
     public async createUser(data: UserData): Promise<User> {
@@ -14,7 +16,7 @@ export class UserService {
     }
 
     public async getUserByEmail(email: string): Promise<User> {
-        return await UserModel.findOne({email: email}).exec();
+        return await UserModel.findOne({email: email}).select('+password').exec();
     }
 
     public async updateUser(existingUser: User, data: UserData) {

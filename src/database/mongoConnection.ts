@@ -1,7 +1,7 @@
 import mongoose, { Connection, Model } from "mongoose";
 import * as process from "node:process";
 import {logger} from "../utils/logger";
-import {DEFAULT_DB_TIMEOUT} from "../utils/constants";
+import {DB_DEFAULT_TIMEOUT} from "../utils/constants";
 
 export class MongoConnection {
     private static instance: MongoConnection;
@@ -21,7 +21,7 @@ export class MongoConnection {
 
         const dbConnection = await mongoose.connect(uri, {
             autoIndex: true,
-            serverSelectionTimeoutMS: Number(process.env.DB_TIMEOUT_MS ?? DEFAULT_DB_TIMEOUT),
+            serverSelectionTimeoutMS: Number(process.env.DB_TIMEOUT_MS ?? DB_DEFAULT_TIMEOUT),
         });
 
         this.connection = dbConnection.connection

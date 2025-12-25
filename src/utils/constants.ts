@@ -1,15 +1,29 @@
-// Mongo
-export const USERS_COLLECTION = 'users';
-export const SURVEYS_COLLECTION = 'surveys';
-export const DEFAULT_DB_TIMEOUT= 5000;
+import { CookieOptions } from "express";
 
-export const REQUEST_PROPERTY='auth'
-export const JWT_ALGORITHM='HS256'
-export const JWT_DEFAULT_EXPIRE_IN='15m'
-export const REFRESH_TOKEN_EXPIRE_IN='15d'
-export const PASSWORD_SALT_ROUNDS=10
+const MS_IN_MINUTE = 60 * 1000;
+const MS_IN_DAY = MS_IN_MINUTE * 60 * 24;
 
-export const QUESTION_DISCRIMINATOR_KEY = 'type'
+export const DB_USERS_COLLECTION = 'users';
+export const DB_SURVEYS_COLLECTION = 'surveys';
+export const DB_DEFAULT_TIMEOUT = 5000;
+
+export const REQUEST_PROPERTY = 'auth'
+export const JWT_ALGORITHM = 'HS256'
+export const JWT_ACCESS_TOKEN_EXPIRE_DEFAULT = '15m'
+export const JWT_REFRESH_TOKEN_EXPIRE_DEFAULT = '15d'
+export const PASSWORD_SALT_ROUNDS = 10
+
+export const JWT_ACCESS_TOKEN_EXPIRE_MS = 15 * MS_IN_MINUTE;
+export const JWT_REFRESH_TOKEN_EXPIRE_MS = 15 * MS_IN_DAY
+
+export const ACCESS_COOKIE = 'access';
+export const REFRESH_COOKIE = 'refresh;'
+export const COOKIE_SECURE = false;
+export const COOKIE_SAME_SITE: CookieOptions['sameSite'] = 'strict';
+export const COOKIE_PATH = '/';
+export const COOKIE_HTTP_ONLY = true;
+
+export const QUESTION_DISCRIMINATOR_KEY = 'questionType'
 export const QUESTION = 'question';
 export const QUESTION_SLIDER = 'slider';
 export const QUESTION_RATE = 'slider';

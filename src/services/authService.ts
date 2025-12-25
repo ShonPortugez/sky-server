@@ -13,12 +13,11 @@ export class AuthService {
     public async login(credentials: UserAuthRequest): Promise<UserAuthResponse> {
         const user = await this.userService.getUserByEmail(credentials.email);
 
-        if (!user || !await compareHashedPasswords(user.password, credentials.password))
+        if (!user || !await compareHashedPasswords(credentials.password, credentials.password))
             throw new BadRequestError(`Invalid user credentials`);
 
         const userId = String(user.id);
         const accessToken = generateAccessToken(userId);
-        // todo: save to db/cache?
         const refreshToken = generateRefreshToken(userId);
 
         return {
@@ -27,10 +26,6 @@ export class AuthService {
             accessToken: accessToken,
             refreshToken: refreshToken,
         };
-    }
-
-    public async logout(user: User) {
-        // todo: invalidate refresh token
     }
 
     public async renewToken(refreshToken: string) {
