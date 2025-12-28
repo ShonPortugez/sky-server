@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose';
-import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
+import {baseSchemaOptions} from "../database/mongoBaseDocument";
 import {User} from "./user.types";
-import {DB_USERS_COLLECTION} from "../utils/constants";
+
+const DB_USERS_COLLECTION = 'users';
 
 const UserSchema = new Schema<User>({
     email: {

@@ -6,7 +6,7 @@ import * as process from "node:process";
 import express from 'express';
 import bodyParser from 'body-parser';
 import { logger } from "./utils/logger";
-import { DEFAULT_PORT } from "./utils/constants";
+import { DEFAULT_PORT } from "./constants";
 import { configureMongoDb } from "./utils/helpers/mongoConfigurator";
 import { AuthController } from "./controllers/auth.controller";
 import cookieParser from 'cookie-parser';
@@ -29,7 +29,6 @@ useExpressServer(app, {
         origin: true
     },
     defaultErrorHandler: true,
-    routePrefix: '/api',
     controllers: [AuthController, UserController],
 });
 

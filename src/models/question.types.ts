@@ -1,4 +1,4 @@
-import { BaseDocument } from "../utils/abstractions/mongoBaseDocument";
+import { BaseDocument } from "../database/mongoBaseDocument";
 import { QuestionResponse } from "./response.types";
 import { QuestionType } from "../enums";
 

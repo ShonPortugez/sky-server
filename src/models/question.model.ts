@@ -1,9 +1,11 @@
 import { Schema, model } from 'mongoose';
 import { QuestionType } from '../enums';
 import * as Response from './response.model'
-import { baseSchemaOptions } from "../utils/abstractions/mongoBaseDocument";
+import { baseSchemaOptions } from "../database/mongoBaseDocument";
 import { BaseQuestion } from "./question.types";
-import { QUESTION, QUESTION_DISCRIMINATOR_KEY, DB_SURVEYS_COLLECTION } from "../utils/constants";
+import { QUESTION_DISCRIMINATOR_KEY } from "../constants";
+
+const DB_SURVEYS_COLLECTION = 'surveys';
 
 export const BaseQuestionSchema = new Schema<BaseQuestion>({
     label: { type: String, required: true },
@@ -22,7 +24,7 @@ export const BaseQuestionSchema = new Schema<BaseQuestion>({
     collection: DB_SURVEYS_COLLECTION,
 });
 
-export const Question = model<BaseQuestion>(QUESTION, BaseQuestionSchema);
+export const Question = model<BaseQuestion>('Question', BaseQuestionSchema);
 
 
 const rangeFields = {

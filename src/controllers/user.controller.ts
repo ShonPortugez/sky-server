@@ -1,7 +1,7 @@
 import {inject, injectable} from "tsyringe";
 import {Body, Delete, Get, JsonController, Patch, Post, UseBefore} from "routing-controllers";
 import {UserService} from "../services/user.service";
-import {toUserResponse, UserData} from "../utils/types/user";
+import {toUserResponse, UserData} from "../types/user";
 import {RegistrationMiddleware} from "../middleware/registration.middleware";
 import {AuthMiddleware} from "../middleware/auth.middleware";
 import {CurrentUser} from "../decorators/currentUser";
@@ -32,11 +32,5 @@ export class UserController {
         return toUserResponse(
             await this.userService.updateUser(currentUser, userData)
         );
-    }
-
-    @Delete('/')
-    @UseBefore(AuthMiddleware)
-    async deleteUser(@CurrentUser() currentUser: User) {
-        await this.userService.deleteUser(currentUser);
     }
 }

@@ -1,9 +1,10 @@
 import {inject, injectable} from "tsyringe";
-import {BadRequestError, Body, CookieParam, Get, HttpCode, JsonController, NotFoundError, Patch, Req, Res, UseBefore} from "routing-controllers";
+import {BadRequestError, Body, CookieParam, Get, JsonController, Patch, Req, Res, UnauthorizedError,} from "routing-controllers";
 import type { Response } from 'express';
-import {UserAuthRequest} from "../utils/types/user";
+import {UserAuthRequest} from "../types/user";
 import {AuthService} from "../services/auth.service";
-import {setJwtCookies} from "../utils/helpers/cookieOptions";
+import {ACCESS_COOKIE, REFRESH_COOKIE} from "../constants";
+import {cookieConfig} from "../config";
 
 @injectable()
 @JsonController('/auth')
@@ -14,7 +15,7 @@ export class AuthController {
     async login(@Body() credentials: UserAuthRequest) {
         const userTokens = await this.authService.login(credentials);
         if(!userTokens)
-            throw new NotFoundError(`Could not authenticate user with mail: ${credentials.email}`);
+            throw new UnauthorizedError(`Incorrect login credentials provided.`);
 
         return userTokens;
     }
@@ -25,7 +26,9 @@ export class AuthController {
             throw new BadRequestError('Failed to locate refresh cookie');
 
         const newAccessToken= await this.authService.renewToken(refreshToken);
-        setJwtCookies(res, newAccessToken, refreshToken);
-        return res.status(200);
+        return res
+            .cookie(ACCESS_COOKIE, newAccessToken, cookieConfig.access)
+            .cookie(REFRESH_COOKIE, refreshToken, cookieConfig.refresh)
+            .status(200);
     }
 }

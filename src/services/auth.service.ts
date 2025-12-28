@@ -1,23 +1,23 @@
-import {UserAuthRequest, UserAuthResponse} from "../utils/types/user";
+import {UserAuthRequest, UserAuthResponse} from "../types/user";
 import {inject, injectable} from "tsyringe";
 import {UserService} from "./user.service";
 import {BadRequestError} from "routing-controllers";
-import {compareHashedPasswords} from "../utils/helpers/passwordHash";
-import {generateAccessToken, generateRefreshToken, verifyRefreshToken} from "../utils/helpers/jwtGenerator";
+import {JwtService} from "./jwt.service";
+import bcrypt from "bcrypt";
 
 @injectable()
 export class AuthService {
-    constructor(@inject(UserService) private userService: UserService) {}
+    constructor(@inject(UserService) private userService: UserService, @inject(JwtService) private jwtService: JwtService) {}
 
     public async login(credentials: UserAuthRequest): Promise<UserAuthResponse> {
         const user = await this.userService.getUserByEmail(credentials.email);
-
-        if (!user || !await compareHashedPasswords(credentials.password, credentials.password))
+        const passwordCompare= await bcrypt.compare(user.password, credentials.password);
+        if (!user || !passwordCompare)
             throw new BadRequestError(`Invalid user credentials`);
 
         const userId = String(user.id);
-        const accessToken = generateAccessToken(userId);
-        const refreshToken = generateRefreshToken(userId);
+        const accessToken = this.jwtService.generateAccessToken(userId);
+        const refreshToken = this.jwtService.generateRefreshToken(userId);
 
         return {
             id: userId,
@@ -28,7 +28,7 @@ export class AuthService {
     }
 
     public async renewToken(refreshToken: string) {
-        const payloadFromRefresh = verifyRefreshToken(refreshToken);
-        return generateAccessToken(payloadFromRefresh.sub);
+        const payloadFromRefresh = this.jwtService.verifyRefreshToken(refreshToken);
+        return this.jwtService.generateAccessToken(payloadFromRefresh.sub);
     }
 }

@@ -1,6 +1,6 @@
 import { Schema, model, Types } from 'mongoose';
-import {DB_SURVEYS_COLLECTION} from "../utils/constants";
-import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
+import {DB_SURVEYS_COLLECTION} from "../constants";
+import {baseSchemaOptions} from "../database/mongoBaseDocument";
 import {BaseQuestionSchema} from "./question.model";
 import {Survey} from "./survey.types";
 

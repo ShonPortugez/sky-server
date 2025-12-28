@@ -1,5 +1,5 @@
 import {BaseQuestion} from "./question.types";
-import {BaseDocument} from "../utils/abstractions/mongoBaseDocument";
+import {BaseDocument} from "../database/mongoBaseDocument";
 import {Types} from "mongoose";
 
 export interface Survey extends BaseDocument{
