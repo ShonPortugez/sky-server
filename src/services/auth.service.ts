@@ -1,7 +1,6 @@
-import {User} from "../models";
 import {UserAuthRequest, UserAuthResponse} from "../utils/types/user";
 import {inject, injectable} from "tsyringe";
-import {UserService} from "./userService";
+import {UserService} from "./user.service";
 import {BadRequestError} from "routing-controllers";
 import {compareHashedPasswords} from "../utils/helpers/passwordHash";
 import {generateAccessToken, generateRefreshToken, verifyRefreshToken} from "../utils/helpers/jwtGenerator";

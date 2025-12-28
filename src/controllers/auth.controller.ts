@@ -2,7 +2,7 @@ import {inject, injectable} from "tsyringe";
 import {BadRequestError, Body, CookieParam, Get, HttpCode, JsonController, NotFoundError, Patch, Req, Res, UseBefore} from "routing-controllers";
 import type { Response } from 'express';
 import {UserAuthRequest} from "../utils/types/user";
-import {AuthService} from "../services/authService";
+import {AuthService} from "../services/auth.service";
 import {setJwtCookies} from "../utils/helpers/cookieOptions";
 
 @injectable()

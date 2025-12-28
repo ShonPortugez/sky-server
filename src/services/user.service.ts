@@ -1,7 +1,5 @@
 import {User, UserModel} from "../models";
 import {UserData} from "../utils/types/user";
-import bcrypt from "bcrypt";
-import {PASSWORD_SALT_ROUNDS} from "../utils/constants";
 import {injectable} from "tsyringe";
 
 @injectable()
@@ -20,11 +18,18 @@ export class UserService {
     }
 
     public async updateUser(existingUser: User, data: UserData) {
-        return await UserModel.findByIdAndUpdate({
-            email: data.email,
-            username: existingUser.username,
-            password: await bcrypt.hash(data.password, PASSWORD_SALT_ROUNDS),
-        }).exec();
+        return await UserModel.findByIdAndUpdate(
+            existingUser.id,
+            {
+                email: existingUser.email,
+                password: existingUser.password,
+                username: existingUser.username,
+            },
+            {
+                new: true,
+                runValidators: true,
+            }
+        ).exec();
     }
 
     public async deleteUser(user: User) {

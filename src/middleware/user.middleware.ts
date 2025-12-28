@@ -1,6 +1,6 @@
 import { injectable} from "tsyringe";
 import {ExpressMiddlewareInterface, NotFoundError} from "routing-controllers";
-import {UserService} from "../services/userService";
+import {UserService} from "../services/user.service";
 import {NextFunction, Response} from "express";
 import {AuthRequest} from "../utils/types/auth.types";
 

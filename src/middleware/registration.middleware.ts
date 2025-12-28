@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { BadRequestError, ExpressMiddlewareInterface, Middleware } from "routing-controllers";
-import { UserService } from "../services/userService";
+import { UserService } from "../services/user.service";
 import { NextFunction, Request, Response } from "express";
 import { hashPassword } from "../utils/helpers/passwordHash";
 

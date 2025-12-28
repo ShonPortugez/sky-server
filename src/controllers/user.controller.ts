@@ -1,6 +1,6 @@
 import {inject, injectable} from "tsyringe";
 import {Body, Delete, Get, JsonController, Patch, Post, UseBefore} from "routing-controllers";
-import {UserService} from "../services/userService";
+import {UserService} from "../services/user.service";
 import {toUserResponse, UserData} from "../utils/types/user";
 import {RegistrationMiddleware} from "../middleware/registration.middleware";
 import {AuthMiddleware} from "../middleware/auth.middleware";
