@@ -20,7 +20,8 @@ export class AuthController {
         return res
             .cookie(ACCESS_COOKIE, accessToken, cookieConfig.access)
             .cookie(REFRESH_COOKIE, refreshToken, cookieConfig.refresh)
-            .status(200);
+            .status(200)
+            .json({ success: true });
     }
 
     @Patch('/refresh')

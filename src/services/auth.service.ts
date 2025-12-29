@@ -11,7 +11,7 @@ export class AuthService {
 
     public async login(email: string, password: string): Promise<UserAuthResponse> {
         const fetchedUser = await this.userService.getUserByEmail(email);
-        const passwordCompare= await bcrypt.compare(fetchedUser.password, password);
+        const passwordCompare= await bcrypt.compare(password, fetchedUser.password);
         if (!fetchedUser || !passwordCompare)
             throw new BadRequestError(`Invalid user credentials`);
 
