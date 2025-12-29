@@ -1,5 +1,5 @@
 import {User, UserModel} from "../models";
-import {UserData} from "../types/user";
+import {UserData} from "../types/user.types";
 import {injectable} from "tsyringe";
 import {BadRequestError} from "routing-controllers";
 import bcrypt from "bcrypt";
@@ -34,9 +34,9 @@ export class UserService {
         return await UserModel.findByIdAndUpdate(
             existingUser.id,
             {
-                email: existingUser.email,
-                password: existingUser.password,
-                username: existingUser.username,
+                email: data.email,
+                password: data.password,
+                username: data.username,
             },
             {
                 new: true,

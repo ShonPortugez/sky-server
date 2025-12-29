@@ -1,4 +1,4 @@
-import {UserAuthRequest, UserAuthResponse} from "../types/user";
+import {UserAuthRequest, UserAuthResponse} from "../types/user.types";
 import {inject, injectable} from "tsyringe";
 import {UserService} from "./user.service";
 import {BadRequestError} from "routing-controllers";
@@ -20,8 +20,6 @@ export class AuthService {
         const refreshToken = this.jwtService.generateRefreshToken(userId);
 
         return {
-            id: userId,
-            email: user.email,
             accessToken: accessToken,
             refreshToken: refreshToken,
         };
