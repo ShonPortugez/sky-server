@@ -9,13 +9,13 @@ import bcrypt from "bcrypt";
 export class AuthService {
     constructor(@inject(UserService) private userService: UserService, @inject(JwtService) private jwtService: JwtService) {}
 
-    public async login(credentials: UserAuthRequest): Promise<UserAuthResponse> {
-        const user = await this.userService.getUserByEmail(credentials.email);
-        const passwordCompare= await bcrypt.compare(user.password, credentials.password);
-        if (!user || !passwordCompare)
+    public async login(email: string, password: string): Promise<UserAuthResponse> {
+        const fetchedUser = await this.userService.getUserByEmail(email);
+        const passwordCompare= await bcrypt.compare(fetchedUser.password, password);
+        if (!fetchedUser || !passwordCompare)
             throw new BadRequestError(`Invalid user credentials`);
 
-        const userId = String(user.id);
+        const userId = String(fetchedUser.id);
         const accessToken = this.jwtService.generateAccessToken(userId);
         const refreshToken = this.jwtService.generateRefreshToken(userId);
 

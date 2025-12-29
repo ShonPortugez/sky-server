@@ -12,7 +12,7 @@ export const BaseQuestionSchema = new Schema<BaseQuestion>({
     description: { type: String, default: "" },
     questionType: {
         type: Number,
-        enum: Object.values(QuestionType).filter(v => typeof v === 'number'),
+        enum: Object.values(QuestionType),
         required: true
     },
     isRequired: { type: Boolean, default: false },

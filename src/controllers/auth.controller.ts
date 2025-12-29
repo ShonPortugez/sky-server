@@ -12,8 +12,8 @@ export class AuthController {
     constructor(@inject(AuthService) private authService: AuthService) {}
 
     @Get('/login')
-    async login(@Body() credentials: UserAuthRequest, @Res() res: Response) {
-        const {accessToken, refreshToken} = await this.authService.login(credentials);
+    async login(@Body() authRequest: UserAuthRequest, @Res() res: Response) {
+        const {accessToken, refreshToken} = await this.authService.login(authRequest.email, authRequest.password);
         if(!accessToken || !refreshToken)
             throw new UnauthorizedError(`Incorrect login credentials provided.`);
 
@@ -26,7 +26,7 @@ export class AuthController {
     @Patch('/refresh')
     async refresh(@Res() res: Response, @CookieParam('refresh') refreshToken: string) {
         if(!refreshToken)
-            throw new BadRequestError('Failed to locate refresh cookie');
+            throw new BadRequestError();
 
         const newAccessToken= await this.authService.renewToken(refreshToken);
         return res

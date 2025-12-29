@@ -11,7 +11,7 @@ export class UserService {
     public async createUser(data: UserData): Promise<User> {
         const existingUser = await this.getUserByEmail(data.email);
         if (existingUser)
-            throw new BadRequestError('Invalid email');
+            throw new BadRequestError('Email already exists');
 
         return await UserModel.create(
             {
@@ -26,13 +26,25 @@ export class UserService {
         return await UserModel.findById(id).exec();
     }
 
+    private async isEmailUnique(existingEmail: string, newEmail: string): Promise<boolean> {
+        if(existingEmail === newEmail)
+            return true;
+
+        return !(await this.getUserByEmail(newEmail));
+    }
+
     public async getUserByEmail(email: string): Promise<User> {
         return await UserModel.findOne({email: email}).select('+password').exec();
     }
 
     public async updateUser(existingUser: User, data: UserData) {
-        return await UserModel.findByIdAndUpdate(
-            existingUser.id,
+
+        const user = UserModel.findById(existingUser.id);
+        const isUnique = await this.isEmailUnique(existingUser.email, data.email);
+        if(!isUnique)
+            throw new BadRequestError('Email already exists');
+
+        return await user.updateOne(
             {
                 email: data.email,
                 password: data.password,
