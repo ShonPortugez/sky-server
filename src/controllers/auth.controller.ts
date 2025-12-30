@@ -1,5 +1,16 @@
 import {inject, injectable} from "tsyringe";
-import {BadRequestError, Body, CookieParam, Get, JsonController, Patch, Req, Res, UnauthorizedError,} from "routing-controllers";
+import {
+    BadRequestError,
+    Body,
+    CookieParam,
+    Get,
+    JsonController,
+    Patch,
+    Post,
+    Req,
+    Res,
+    UnauthorizedError,
+} from "routing-controllers";
 import {Response} from 'express';
 import {UserAuthRequest} from "../types/user.types";
 import {AuthService} from "../services/auth.service";
@@ -11,7 +22,7 @@ import {cookieConfig} from "../config";
 export class AuthController {
     constructor(@inject(AuthService) private authService: AuthService) {}
 
-    @Get('/login')
+    @Post('/login')
     async login(@Body() authRequest: UserAuthRequest, @Res() res: Response) {
         const {accessToken, refreshToken} = await this.authService.login(authRequest.email, authRequest.password);
         if(!accessToken || !refreshToken)
