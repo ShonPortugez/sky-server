@@ -3,7 +3,7 @@ import {Body, Delete, Get, JsonController, Patch, Post, UseBefore} from "routing
 import {UserService} from "../services/user/user.service";
 import {UserData} from "../types/user.types";
 import {AuthMiddleware} from "../middleware/auth.middleware";
-import {CurrentUser} from "../decorators/currentUser";
+import {CurrentUser} from "../decorators/user.decorator";
 import {User} from "../models";
 import {UserMapper} from "../mappers/user.mapper";
 
@@ -22,13 +22,11 @@ export class UserController {
     }
 
     @Get('/')
-    @UseBefore(AuthMiddleware)
     async getCurrentUser(@CurrentUser() currentUser: User) {
         return this.userMapper.mapToDto(currentUser);
     }
 
     @Patch('/')
-    @UseBefore(AuthMiddleware)
     async updateUser(@CurrentUser() currentUser: User, @Body() userData: UserData) {
         return this.userMapper.mapToDto(
             await this.userService.updateUser(currentUser, userData)

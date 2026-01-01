@@ -9,7 +9,7 @@ export const PASSWORD_SALT_ROUNDS = 10
 export const JWT_ALGORITHM = 'HS256' as Algorithm
 export const ACCESS_COOKIE = 'access';
 export const REFRESH_COOKIE = 'refresh';
-export const COOKIE_SAME_SITE: CookieOptions['sameSite'] = 'strict';
+export const COOKIE_SAME_SITE: CookieOptions['sameSite'] = 'lax';
 
 export const QUESTION_DISCRIMINATOR_KEY = 'questionType'
 

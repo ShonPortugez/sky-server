@@ -25,10 +25,13 @@ export class SurveyService {
     }
 
     public async getUserSurveys(user: User) {
-        return await SurveyModel
+        const surveys = await SurveyModel
             .find({ userId: user.id })
             .select({ 'questions': 0})
+            .lean()
             .exec();
+
+        return surveys;
     }
 
     public async updateSurvey(survey: Survey, newSurvey: SurveyData) {

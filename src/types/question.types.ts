@@ -13,3 +13,11 @@ export type AddQuestionDto = {
     question: CreateQuestionDto;
     insertAt: number;
 };
+
+export type UpdateQuestionDto = {
+    question: CreateQuestionDto;
+}
+
+export type UpdateQuestionIndexDto = {
+    newIndex: number;
+}

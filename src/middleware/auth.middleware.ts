@@ -1,13 +1,11 @@
-import {expressjwt} from "express-jwt";
-import {Algorithm} from 'jsonwebtoken'
-import * as process from "node:process";
 import 'dotenv/config';
+import {expressjwt} from "express-jwt";
+import process from "node:process";
 import {JWT_ALGORITHM} from "../constants";
+import {Algorithm} from "jsonwebtoken";
 
-const REQUEST_PROPERTY = 'auth'
-
-export const AuthMiddleware = expressjwt({
+export const JwtMiddleware = expressjwt({
     secret: process.env.JWT_SECRET,
     algorithms: [JWT_ALGORITHM as Algorithm],
-    requestProperty: REQUEST_PROPERTY,
-});
+    getToken: (req) => req.cookies?.access
+}).unless({ path: ['/auth/login']});
