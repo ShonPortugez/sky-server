@@ -1,7 +1,7 @@
 import {Document, Types} from "mongoose";
 
 export interface BaseDocument extends Document {
-    id: Types.ObjectId;
+    id: string;
     createdAt: Date;
 }
 

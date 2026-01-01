@@ -1,6 +1,6 @@
-import {UserAuthRequest, UserAuthResponse} from "../types/user.types";
+import {UserAuthRequest, UserAuthResponse} from "../../types/user.types";
 import {inject, injectable} from "tsyringe";
-import {UserService} from "./user.service";
+import {UserService} from "../user/user.service";
 import {BadRequestError} from "routing-controllers";
 import {JwtService} from "./jwt.service";
 import bcrypt from "bcrypt";

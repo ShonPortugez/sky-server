@@ -1,9 +1,9 @@
-import {User, UserModel} from "../models";
-import {UserData} from "../types/user.types";
+import {User, UserModel} from "../../models";
+import {UserData} from "../../types/user.types";
 import {injectable} from "tsyringe";
 import {BadRequestError} from "routing-controllers";
 import bcrypt from "bcrypt";
-import {PASSWORD_SALT_ROUNDS} from "../constants";
+import {PASSWORD_SALT_ROUNDS} from "../../constants";
 
 @injectable()
 export class UserService {

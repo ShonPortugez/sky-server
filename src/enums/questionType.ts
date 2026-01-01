@@ -5,5 +5,4 @@ export enum QuestionType {
     MULTI,
     DATE,
     CHECKBOX,
-    UNKNOWN,
 }

@@ -7,8 +7,7 @@ export interface BaseQuestion extends BaseDocument {
     description: string;
     questionType: QuestionType;
     isRequired: boolean;
-    index: number;
-    responses: QuestionResponse[];
+    responses?: QuestionResponse[];
 }
 
 interface MinMaxQuestion extends BaseQuestion {
@@ -16,26 +15,9 @@ interface MinMaxQuestion extends BaseQuestion {
     maxValue: number;
 }
 
-export interface SliderQuestion extends MinMaxQuestion {
-    questionType: QuestionType.SLIDER;
-}
-export interface RateQuestion extends MinMaxQuestion {
-    questionType: QuestionType.RATE;
-}
-
-export interface TextQuestion extends BaseQuestion {
-    questionType: QuestionType.TEXT;
-    placeholder: string;
-}
-
-export interface MultiAnswerQuestion extends BaseQuestion {
-    questionType: QuestionType.MULTI;
-    options: string[];
-}
-
-export interface DateQuestion extends BaseQuestion {
-    questionType: QuestionType.DATE;
-}
-export interface CheckboxQuestion extends BaseQuestion {
-    questionType: QuestionType.CHECKBOX;
-}
+export type SliderQuestion = MinMaxQuestion & { questionType: QuestionType.SLIDER }
+export type RateQuestion = MinMaxQuestion & { questionType: QuestionType.RATE }
+export type TextQuestion = BaseQuestion & { questionType: QuestionType.TEXT, placeholder: string}
+export type MultiAnswerQuestion = BaseQuestion & { questionType: QuestionType.MULTI, options: string[]; }
+export type DateQuestion = BaseQuestion & { questionType: QuestionType.DATE }
+export type CheckboxQuestion = BaseQuestion & { questionType: QuestionType.CHECKBOX; }

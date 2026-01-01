@@ -13,7 +13,7 @@ import {
 } from "routing-controllers";
 import {Response} from 'express';
 import {UserAuthRequest} from "../types/user.types";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../services/authentication/auth.service";
 import {ACCESS_COOKIE, REFRESH_COOKIE} from "../constants";
 import {cookieConfig} from "../config";
 
