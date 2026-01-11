@@ -1,4 +1,4 @@
-import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
+import {baseSchemaOptions} from "../database/mongoBaseDocument";
 import {Schema} from "mongoose";
 
 const responseSchemaOptions = {

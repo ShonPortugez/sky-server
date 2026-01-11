@@ -1,6 +1,8 @@
 import {createLogger, format, transports} from "winston";
+import 'dotenv/config';
 import * as process from "node:process";
-import {LOG_LEVEL_DEFAULT} from "./constants";
+
+const LOG_LEVEL_DEFAULT = 'info'
 
 export const logger = createLogger({
     level: process.env.LOG_LEVEL || LOG_LEVEL_DEFAULT,

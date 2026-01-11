@@ -1,42 +1,49 @@
 import {inject, injectable} from "tsyringe";
-import {Body, BodyParam, HttpCode, JsonController, NotFoundError, Post, UseBefore} from "routing-controllers";
-import {AuthMiddleware} from "../middleware/auth.middleware";
-import {CurrentUser} from "../decorators/currentUser";
-import {User} from "../models";
-import {UserAuthRequestDto} from "../dto/user";
-import {AuthService} from "../services/authService";
-import {DbAvailabilityMiddleware} from "../middleware/dbAvailabilityMiddleware";
+import {
+    BadRequestError,
+    Body,
+    CookieParam,
+    Get,
+    JsonController,
+    Patch,
+    Post,
+    Req,
+    Res,
+    UnauthorizedError,
+} from "routing-controllers";
+import {Response} from 'express';
+import {UserAuthRequest} from "../types/user.types";
+import {AuthService} from "../services/auth.service";
+import {ACCESS_COOKIE, REFRESH_COOKIE} from "../constants";
+import {cookieConfig} from "../config";
 
 @injectable()
 @JsonController('/auth')
-@UseBefore(DbAvailabilityMiddleware)
 export class AuthController {
     constructor(@inject(AuthService) private authService: AuthService) {}
 
-    @HttpCode(201)
     @Post('/login')
-    async login(@Body() credentials: UserAuthRequestDto) {
-        const result = await this.authService.login(credentials);
-        if(!result)
-            throw new NotFoundError(`Could not authenticate user with mail: ${credentials.email}`);
+    async login(@Body() authRequest: UserAuthRequest, @Res() res: Response) {
+        const {accessToken, refreshToken} = await this.authService.login(authRequest.email, authRequest.password);
+        if(!accessToken || !refreshToken)
+            throw new UnauthorizedError(`Incorrect login credentials provided.`);
 
-        return result;
+        return res
+            .cookie(ACCESS_COOKIE, accessToken, cookieConfig.access)
+            .cookie(REFRESH_COOKIE, refreshToken, cookieConfig.refresh)
+            .status(200)
+            .json({ success: true });
     }
 
-    @HttpCode(200)
-    @UseBefore(AuthMiddleware)
-    @Post('/logout')
-    async logout(@CurrentUser() user: User) {
-        await this.authService.logout(user)
-    }
+    @Patch('/refresh')
+    async refresh(@Res() res: Response, @CookieParam('refresh') refreshToken: string) {
+        if(!refreshToken)
+            throw new BadRequestError();
 
-    @HttpCode(201)
-    @Post('/refresh')
-    @UseBefore(AuthMiddleware)
-    async refresh(
-        @CurrentUser() user: User,
-        @BodyParam('refresh') refreshToken: string
-    ) {
-        return await this.authService.renewToken(user, refreshToken);
+        const newAccessToken= await this.authService.renewToken(refreshToken);
+        return res
+            .cookie(ACCESS_COOKIE, newAccessToken, cookieConfig.access)
+            .cookie(REFRESH_COOKIE, refreshToken, cookieConfig.refresh)
+            .status(200);
     }
 }

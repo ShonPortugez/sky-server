@@ -1,4 +1,4 @@
-import {BaseDocument} from "../utils/abstractions/mongoBaseDocument";
+import {BaseDocument} from "../database/mongoBaseDocument";
 
 export interface User extends BaseDocument{
     email: string;
