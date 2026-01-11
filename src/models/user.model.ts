@@ -1,7 +1,10 @@
 import { Schema, model } from 'mongoose';
-import {baseSchemaOptions} from "../utils/abstractions/mongoBaseDocument";
+import {baseSchemaOptions} from "../database/mongoBaseDocument";
 import {User} from "./user.types";
-import {USERS_COLLECTION} from "../utils/constants";
+import * as process from "node:process";
+import 'dotenv/config';
+
+const DB_USERS_COLLECTION = process.env.DB_USERS_COLLECTION ?? 'users';
 
 const UserSchema = new Schema<User>({
     email: {
@@ -24,7 +27,7 @@ const UserSchema = new Schema<User>({
     }
 }, {
     ...baseSchemaOptions,
-    collection: USERS_COLLECTION
+    collection: DB_USERS_COLLECTION
 });
 
 export const UserModel = model<User>('User', UserSchema);
